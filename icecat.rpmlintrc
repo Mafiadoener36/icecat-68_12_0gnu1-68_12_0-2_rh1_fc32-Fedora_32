@@ -1,0 +1,54 @@
+# Whitelisting errors
+# https://fedoraproject.org/wiki/Taskotron/Tasks/dist.rpmlint#whitelist
+# https://src.fedoraproject.org/rpms/python3/blob/master/f/python3.rpmlintrc
+# Edited by sagitter (sagitter@fedoraproject.org)
+
+# KNOWN BUGS:
+#
+
+# TESTS:
+##### SRPMs #####
+
+# ifarch applied patches are okay
+# https://fedoraproject.org/wiki/Packaging:Guidelines#Architecture_Support
+addFilter(r'(%ifarch-applied-patch) Patch*')
+# Different file size due to the signature of the source code tarbz archive
+addFilter(r'file-size-mismatch')
+
+addFilter(r'(invalid-url) Source0')
+addFilter(r'(invalid-url) Source4')
+addFilter(r'(invalid-url) Source5')
+addFilter(r'(invalid-url) Source17')
+
+addFilter(r'(strange-permission) icecat-lang_download.sh')
+addFilter(r'(strange-permission) node-stdout-nonblocking-wrapper')
+
+# ERRORS:
+##### RPMs  #####
+
+# chroot function (??)
+addFilter(r'(missing-call-to-chdir-with-chroot) /usr/lib64/icecat/libmozsandbox.so')
+addFilter(r'(missing-call-to-setgroups-before-setuid) /usr/lib64/icecat/libxul.so')
+addFilter(r'(missing-call-to-chdir-with-chroot) /usr/lib/icecat/libmozsandbox.so')
+addFilter(r'(missing-call-to-setgroups-before-setuid) /usr/lib/icecat/libxul.so')
+
+# Expected on FF browser
+# https://support.mozilla.org/en-US/questions/1045418
+addFilter(r'(zero-length) /usr/lib(64)?/icecat/chrome.manifest')
+addFilter(r'(zero-length) /usr/lib(64)?/icecat/browser/chrome.manifest')
+
+addFilter(r'E:library-not-linked-against-libc /usr/lib64/icecat/gtk2/libmozgtk.so')
+addFilter(r'E:library-not-linked-against-libc /usr/lib64/icecat/libmozgtk.so')
+addFilter(r'E:library-not-linked-against-libc /usr/lib/icecat/gtk2/libmozgtk.so')
+addFilter(r'E:library-not-linked-against-libc /usr/lib/icecat/libmozgtk.so')
+
+# False positive
+addFilter(r'(dangling-symlink) /usr/lib(64)?/icecat/dictionaries /usr/share/myspell')
+addFilter(r'(unversioned-explicit-provides) webclient')
+
+# WARNINGS:
+##### RPMs  #####
+
+addFilter(r'(no-manual-page-for-binary) icecat-wayland')
+addFilter(r'(no-manual-page-for-binary) icecat-x11')
+
